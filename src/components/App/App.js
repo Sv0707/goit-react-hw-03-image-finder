@@ -1,23 +1,27 @@
 import React, { Component } from "react";
 import "./App.css";
-import fetchImages from '../../services/api';
+import fetchImages from "../../services/api";
 import Searchbar from "../Searchbar/Searchbar";
 import Modal from "../Modal/Modal";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import Button from "../Button/Button";
 import Loader from "../Loader/Loader";
 
-class App extends Component {
+const errorTextStyle = {
+  textAlign: 'center',
+};
 
+class App extends Component {
   state = {
     gallery: [],
-    search: '',
+    search: "",
     page: 1,
     isModalOpen: false,
-    largeImage: '',
+    largeImage: "",
     total: 0,
     loading: false,
-    error: null
+    error: null,
+    showLoadMore: false
   };
 
   fetchGallery = () => {
@@ -27,23 +31,40 @@ class App extends Component {
 
     fetchImages(search, page)
       .then(({ hits, total }) => {
-        this.setState(prevState => ({
+        if (hits.length === 0) {
+          return Promise.reject(
+            new Error(`There is no pictures by ${search} name, please try another request`));
+        }
+        else {
+          if (Math.ceil(total / 12) > page) {
+        this.setState((prevState) => ({
           gallery: [...prevState.gallery, ...hits],
           page: prevState.page + 1,
           total,
+          showLoadMore: true,
+          error: false,
         }));
+      }
+        else {
+          this.setState((prevState) => ({
+            gallery: [...prevState.gallery, ...hits],
+            page: prevState.page + 1,
+            total,
+            showLoadMore: false,
+            error: false
+          }));
+        }
+      }
       })
-      .catch(error => this.setState({ error }))
+      .catch((error) => this.setState({ error }))
       .finally(() => this.setState({ loading: false }));
   };
 
-
   componentDidMount() {
-      this.setState({loading: true});
-      this.fetchGallery();
+    this.setState({ loading: true });
+    this.fetchGallery();
   }
 
- 
   componentDidUpdate(prevProps, prevState) {
     const prevSearchItem = prevState.search;
     const nextSearchItem = this.state.search;
@@ -51,32 +72,43 @@ class App extends Component {
       this.fetchGallery();
     }
   }
-  
+
   handleSubmit = (searchItem) => {
     this.setState({ search: searchItem, gallery: [], page: 1 });
   };
 
+  
+//   showLoadMore = () => {
+//     const { total, page } = this.state;
+// const totalPages = Math.ceil(total / 12);
+//     return (totalPages >= page);
+//   };
+
+  
   toggleModal = () => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       isModalOpen: !prevState.isModalOpen,
     }));
   };
 
-  handleOpenPicture = largeIMG => {
+  handleOpenPicture = (largeIMG) => {
     console.log(largeIMG);
     this.setState({ largeImage: largeIMG });
     this.toggleModal();
   };
 
   render() {
-    const { isModalOpen, gallery, largeImage, loading } = this.state;
-   return (
+    const { isModalOpen, gallery, largeImage, loading, error, showLoadMore } = this.state;
+    return (
       <div>
-<Searchbar onSubmit={this.handleSubmit} />
-{loading && <Loader />}
-{gallery.length > 0 && <ImageGallery gallery={gallery} openImg={this.handleOpenPicture} />}
-<Button onClick={this.fetchGallery} />
-{isModalOpen && (
+        <Searchbar onSubmit={this.handleSubmit} />
+        {error && <h2 style={errorTextStyle}>{error.message}</h2>}
+        {loading && <Loader />}
+        {gallery.length > 0 && (
+          <ImageGallery gallery={gallery} openImg={this.handleOpenPicture} />
+        )}
+        {gallery.length > 0 && !loading && showLoadMore && (<Button onClick={this.fetchGallery} />)}
+                {isModalOpen && (
           <Modal onClose={this.toggleModal}>
             <img src={largeImage} alt={largeImage} />
           </Modal>

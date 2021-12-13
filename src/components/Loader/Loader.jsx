@@ -4,7 +4,7 @@ import s from "./Loader.module.css";
 const Loader = () => {
   return (
     <div className={s.loader}>
-      <Spinner type="Circles" color="#00BFFF" height={80} width={80} />
+      <Spinner type="Circles" color="#3f51b5" height={200} width={200} />
     </div>
   );
 };
