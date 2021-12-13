@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/goit-react-hw-03-image-finder/static/css/main.fa1d8532.chunk.css",
+    "main.js": "/goit-react-hw-03-image-finder/static/js/main.95d55e50.chunk.js",
+    "main.js.map": "/goit-react-hw-03-image-finder/static/js/main.95d55e50.chunk.js.map",
+    "runtime-main.js": "/goit-react-hw-03-image-finder/static/js/runtime-main.2541e481.js",
+    "runtime-main.js.map": "/goit-react-hw-03-image-finder/static/js/runtime-main.2541e481.js.map",
+    "static/js/2.a26cf22b.chunk.js": "/goit-react-hw-03-image-finder/static/js/2.a26cf22b.chunk.js",
+    "static/js/2.a26cf22b.chunk.js.map": "/goit-react-hw-03-image-finder/static/js/2.a26cf22b.chunk.js.map",
+    "index.html": "/goit-react-hw-03-image-finder/index.html",
+    "static/css/main.fa1d8532.chunk.css.map": "/goit-react-hw-03-image-finder/static/css/main.fa1d8532.chunk.css.map",
+    "static/js/2.a26cf22b.chunk.js.LICENSE.txt": "/goit-react-hw-03-image-finder/static/js/2.a26cf22b.chunk.js.LICENSE.txt",
+    "static/media/Searchbar.module.css": "/goit-react-hw-03-image-finder/static/media/search_ideogram.e979e3c4.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2541e481.js",
+    "static/js/2.a26cf22b.chunk.js",
+    "static/css/main.fa1d8532.chunk.css",
+    "static/js/main.95d55e50.chunk.js"
+  ]
+}
