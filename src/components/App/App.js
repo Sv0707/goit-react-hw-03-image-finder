@@ -99,8 +99,7 @@ class App extends Component {
         {gallery.length > 0 && (
           <ImageGallery gallery={gallery} openImg={this.handleOpenPicture} />
         )}
-        {gallery.length > 0 && !loading && showLoadMore && (
-          <Button onClick={this.fetchGallery} />
+        {showLoadMore && !loading && (<Button onClick={this.fetchGallery} />
         )}
         {isModalOpen && (
           <Modal onClose={this.toggleModal}>
