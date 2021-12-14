@@ -32,6 +32,7 @@ class App extends Component {
     fetchImages(search, page)
       .then(({ hits, total }) => {
         if (hits.length === 0) {
+          this.setState({ showLoadMore: false })
           return Promise.reject(
             new Error(
               `There is no pictures by ${search} name, please try another request`
